@@ -4,6 +4,9 @@
   "description": "PhD-Grade Self-Corrective Temporal GraphRAG Engine with Speculative Retrieval Evaluation & Hierarchical Concept Tree",
   "main": "dist/server.js",
   "type": "module",
+  "bin": {
+    "temporal-rag": "./dist/cli.js"
+  },
   "scripts": {
     "build": "tsc",
     "start": "node dist/server.js",
