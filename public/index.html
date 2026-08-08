@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Self-Corrective Temporal GraphRAG Observability Engine | anderdebona</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070913;
+      --panel: rgba(15, 23, 42, 0.75);
+      --border: rgba(139, 92, 246, 0.2);
+      --accent: #8b5cf6;
+      --accent-glow: rgba(139, 92, 246, 0.4);
+      --cyan: #06b6d4;
+      --green: #10b981;
+      --amber: #f59e0b;
+      --text: #f8fafc;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); padding: 2rem; }
+    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+    .brand { font-size: 1.5rem; font-weight: 800; background: linear-gradient(135deg, #8b5cf6, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem; }
+    .btn { background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: 700; cursor: pointer; }
+    pre { background: rgba(2, 6, 23, 0.9); border: 1px solid var(--border); padding: 1rem; border-radius: 0.5rem; font-family: 'Fira Code', monospace; font-size: 0.85rem; color: #c4b5fd; overflow-x: auto; max-height: 250px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <div class="brand">🧠 Self-Corrective Temporal GraphRAG Observability Engine</div>
+      <div style="font-size: 0.85rem; color: #94a3b8;">Temporal Graph Indexing & Speculative Self-Correction • anderdebona</div>
+    </div>
+    <span style="background: rgba(139, 92, 246, 0.15); color: #c4b5fd; border: 1px solid rgba(196, 181, 253, 0.3); padding: 0.35rem 0.85rem; border-radius: 9999px; font-size: 0.8rem; font-weight: 700;">Next-Gen RAG Architecture</span>
+  </header>
+
+  <div class="grid">
+    <div class="panel">
+      <h2>1. Temporal Query & Target Year Selection</h2>
+      <p style="color: #94a3b8; font-size: 0.85rem; margin-top: 0.5rem; margin-bottom: 1rem;">
+        Query facts for a target year to test temporal context isolation (preventing historical contamination).
+      </p>
+      <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+        <input type="text" id="conceptInput" value="TaxRate" style="flex: 1; padding: 0.75rem; background: #0f172a; border: 1px solid var(--border); color: white; border-radius: 0.5rem;">
+        <input type="number" id="yearInput" value="2026" min="2020" max="2030" style="width: 100px; padding: 0.75rem; background: #0f172a; border: 1px solid var(--border); color: white; border-radius: 0.5rem;">
+      </div>
+      <button class="btn" onclick="runTemporalRAG()">Execute Temporal Graph RAG</button>
+      
+      <h2 style="margin-top: 1.5rem;">Temporal Knowledge Base Index</h2>
+      <pre id="kbIndex">Loading Temporal Nodes...</pre>
+    </div>
+
+    <div class="panel">
+      <h2>2. Speculative Self-Corrective Evaluator Node</h2>
+      <div id="relevanceBadge" style="font-weight: 700; color: var(--green); margin-top: 0.5rem; margin-bottom: 1rem;">Relevance Score: -</div>
+      
+      <h2>3. Synthesized Output with Audit Citations</h2>
+      <pre id="outputLog">Awaiting query execution...</pre>
+    </div>
+  </div>
+
+  <script>
+    async function loadNodes() {
+      const res = await fetch('/api/nodes');
+      const data = await res.json();
+      document.getElementById('kbIndex').innerText = JSON.stringify(data, null, 2);
+    }
+
+    async function runTemporalRAG() {
+      const concept = document.getElementById('conceptInput').value;
+      const targetYear = parseInt(document.getElementById('yearInput').value);
+
+      const res = await fetch('/api/rag/query', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ concept, targetYear })
+      });
+      const data = await res.json();
+
+      document.getElementById('relevanceBadge').innerText = `Relevance Score: ${(data.evaluation.relevanceScore * 100).toFixed(1)}% | Query Rewritten: ${data.evaluation.queryRewritten}`;
+      document.getElementById('outputLog').innerText = JSON.stringify(data.generation, null, 2);
+    }
+
+    window.onload = loadNodes;
+  </script>
+</body>
+</html>
