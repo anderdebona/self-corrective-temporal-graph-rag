@@ -78,3 +78,31 @@ describe('Temporal Decay Engine', () => {
     expect(ranked.some((r) => r.factId === 'old')).toBe(false);
   });
 });
+
+import { QueryRewriter } from '../src/rag/query-rewriter.js';
+import { HierarchicalRetriever } from '../src/rag/hierarchical-retriever.js';
+
+describe('Query Rewriter', () => {
+  it('should expand synonyms in queries', () => {
+    const rw = new QueryRewriter();
+    const result = rw.rewrite('tax rate');
+    expect(result.expansions.length).toBeGreaterThan(0);
+    expect(result.strategy).toBe('SYNONYM_EXPANSION');
+  });
+  it('should passthrough unknown terms', () => {
+    const rw = new QueryRewriter();
+    const result = rw.rewrite('quantum computing');
+    expect(result.strategy).toBe('PASSTHROUGH');
+  });
+});
+
+describe('Hierarchical Retriever', () => {
+  it('should retrieve from multiple levels', () => {
+    const hr = new HierarchicalRetriever();
+    hr.addLevel('summary', ['Tax rate overview 2024', 'Economic summary']);
+    hr.addLevel('detail', ['Tax rate is 15% for individuals', 'Corporate tax details']);
+    const results = hr.retrieve('tax');
+    expect(results.length).toBe(2);
+    expect(results[0].totalRetrieved).toBeGreaterThan(0);
+  });
+});
