@@ -106,3 +106,36 @@ describe('Hierarchical Retriever', () => {
     expect(results[0].totalRetrieved).toBeGreaterThan(0);
   });
 });
+
+describe('TemporalGraphCompressor (v4.0.0)', () => {
+  it('should merge contiguous temporal facts into unified intervals', async () => {
+    const { TemporalGraphCompressor } = await import('../src/graph/temporal-compressor.js');
+    const facts = [
+      { id: 'f1', entity: 'CEO', property: 'role', value: 'Alice', validFrom: 2020, validTo: 2022 },
+      { id: 'f2', entity: 'CEO', property: 'role', value: 'Alice', validFrom: 2023, validTo: 2025 },
+      { id: 'f3', entity: 'CEO', property: 'role', value: 'Bob', validFrom: 2026, validTo: 2028 },
+    ];
+    const compressed = TemporalGraphCompressor.compress(facts);
+    expect(compressed.length).toBe(2);
+    const aliceInterval = compressed.find(c => c.value === 'Alice')!;
+    expect(aliceInterval.validFrom).toBe(2020);
+    expect(aliceInterval.validTo).toBe(2025);
+    expect(aliceInterval.mergedFactCount).toBe(2);
+  });
+});
+
+describe('BiDirectionalTemporalPathFinder (v4.0.0)', () => {
+  it('should find time-respecting monotonic paths', async () => {
+    const { BiDirectionalTemporalPathFinder } = await import('../src/graph/bidirectional-pathfinder.js');
+    const edges = [
+      { from: 'NodeA', to: 'NodeB', timestamp: 100, relation: 'causes' },
+      { from: 'NodeB', to: 'NodeC', timestamp: 200, relation: 'triggers' },
+      { from: 'NodeA', to: 'NodeC', timestamp: 50, relation: 'bypasses' }, // past event
+    ];
+    const result = BiDirectionalTemporalPathFinder.findMonotonicPath(edges, 'NodeA', 'NodeC', 80, 300);
+    expect(result.found).toBe(true);
+    expect(result.path).toEqual(['NodeA', 'NodeB', 'NodeC']);
+    expect(result.totalTimeSpan).toBe(100);
+  });
+});
+
