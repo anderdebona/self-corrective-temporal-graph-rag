@@ -139,3 +139,42 @@ describe('BiDirectionalTemporalPathFinder (v4.0.0)', () => {
   });
 });
 
+describe('TemporalCRAGEvaluator (v5.0.0)', () => {
+  it('should filter stale temporal documents and trigger corrective action', async () => {
+    const { TemporalCRAGEvaluator } = await import('../src/rag/temporal-crag-evaluator.js');
+    const evaluator = new TemporalCRAGEvaluator();
+
+    const docs = [
+      { id: 'd1', content: 'Interest rate set at 5.25% by Federal Reserve', validFrom: 2023, validTo: 2024, confidence: 0.95 },
+      { id: 'd2', content: 'Historic Interest rate zero lower bound policy', validFrom: 2010, validTo: 2015, confidence: 0.90 }
+    ];
+
+    // Query in year 2024
+    const result = evaluator.evaluate('Interest rate Federal Reserve', 2024, docs);
+    expect(result.action).toBe('CORRECT');
+    expect(result.retainedDocuments.length).toBe(1);
+    expect(result.retainedDocuments[0].id).toBe('d1');
+    expect(result.filteredStaleDocuments.length).toBe(1);
+    expect(result.filteredStaleDocuments[0].id).toBe('d2');
+  });
+});
+
+describe('TimeDecayedPageRankEngine (v5.0.0)', () => {
+  it('should rank recent nodes higher than stale historical nodes in temporal random walk', async () => {
+    const { TimeDecayedPageRankEngine } = await import('../src/graph/time-decay-pagerank.js');
+    const engine = new TimeDecayedPageRankEngine(0.01, 0.85);
+
+    const now = Date.now();
+    const nodes = ['Hub', 'RecentNode', 'OldNode'];
+    const edges = [
+      { source: 'Hub', target: 'RecentNode', timestamp: now - 1000 },
+      { source: 'Hub', target: 'OldNode', timestamp: now - 100000000 },
+    ];
+
+    const result = engine.computeTemporalPageRank(nodes, edges, now);
+    expect(result.scores['RecentNode']).toBeGreaterThan(result.scores['OldNode']);
+    expect(result.converged).toBe(true);
+  });
+});
+
+

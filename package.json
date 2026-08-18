@@ -1,7 +1,7 @@
 {
   "name": "self-corrective-temporal-graph-rag",
-  "version": "4.0.0",
-  "description": "PhD-Grade Self-Corrective Temporal GraphRAG Engine with Speculative Retrieval Evaluation & Hierarchical Concept Tree",
+  "version": "5.0.0",
+  "description": "PhD-Grade Self-Corrective Temporal GraphRAG Engine (Temporal CRAG Evaluator, Time-Decayed PageRank, Platt Scaling & Monotonic Causal Paths)",
   "main": "dist/server.js",
   "type": "module",
   "bin": {

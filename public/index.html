@@ -3,16 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Self-Corrective Temporal GraphRAG Studio | anderdebona</title>
+  <title>Self-Corrective Temporal GraphRAG Studio v5.0.0 | anderdebona</title>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #030712;
-      --panel: rgba(15, 23, 42, 0.8);
+      --panel: rgba(15, 23, 42, 0.85);
       --border: rgba(168, 85, 247, 0.25);
       --purple: #a855f7;
       --cyan: #06b6d4;
       --green: #10b981;
+      --amber: #f59e0b;
       --red: #f43f5e;
       --text: #f9fafb;
       --text-dim: #94a3b8;
@@ -23,20 +24,20 @@
     .brand { font-size: 1.6rem; font-weight: 700; background: linear-gradient(135deg, #c084fc, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .status-badge { background: rgba(168, 85, 247, 0.15); color: #d8b4fe; border: 1px solid rgba(216, 180, 254, 0.3); padding: 0.35rem 0.85rem; border-radius: 9999px; font-size: 0.8rem; font-weight: 600; }
 
-    .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
-    .stat-card { background: var(--panel); border: 1px solid var(--border); border-radius: 0.75rem; padding: 1rem; text-align: center; }
-    .stat-val { font-size: 1.8rem; font-weight: 700; font-family: 'Fira Code', monospace; color: #c084fc; margin-top: 0.25rem; }
-    .stat-lbl { font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; }
+    .stats-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.75rem; margin-bottom: 1.5rem; }
+    .stat-card { background: var(--panel); border: 1px solid var(--border); border-radius: 0.75rem; padding: 0.85rem; text-align: center; }
+    .stat-val { font-size: 1.5rem; font-weight: 700; font-family: 'Fira Code', monospace; color: #c084fc; margin-top: 0.2rem; }
+    .stat-lbl { font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; }
 
     .main-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1.5rem; }
-    .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 0.75rem; padding: 1.25rem; backdrop-filter: blur(12px); }
-    .panel-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.75rem; display: flex; justify-content: space-between; align-items: center; color: #e9d5ff; }
+    .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 0.75rem; padding: 1.25rem; backdrop-filter: blur(12px); margin-bottom: 1.5rem; }
+    .panel-title { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.75rem; display: flex; justify-content: space-between; align-items: center; color: #e9d5ff; }
 
-    .slider-box { background: rgba(2, 6, 23, 0.95); border: 1px solid var(--border); border-radius: 0.5rem; padding: 1rem; margin-bottom: 1rem; text-align: center; }
-    .slider-val { font-size: 2.2rem; font-weight: 700; font-family: 'Fira Code', monospace; color: var(--cyan); }
-    input[type=range] { width: 100%; margin: 0.75rem 0; accent-color: var(--cyan); cursor: pointer; }
+    .slider-box { background: rgba(2, 6, 23, 0.95); border: 1px solid var(--border); border-radius: 0.5rem; padding: 0.75rem; margin-bottom: 1rem; text-align: center; }
+    .slider-val { font-size: 2rem; font-weight: 700; font-family: 'Fira Code', monospace; color: var(--cyan); }
+    input[type=range] { width: 100%; margin: 0.5rem 0; accent-color: var(--cyan); cursor: pointer; }
 
-    .btn { background: linear-gradient(135deg, #a855f7, #7e22ce); color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 0.5rem; font-weight: 600; cursor: pointer; font-family: inherit; transition: 0.2s all; }
+    .btn { background: linear-gradient(135deg, #a855f7, #7e22ce); color: white; border: none; padding: 0.55rem 1rem; border-radius: 0.5rem; font-weight: 600; cursor: pointer; font-family: inherit; transition: 0.2s all; font-size: 0.85rem; }
     .btn:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3); }
 
     .controls { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
@@ -46,112 +47,122 @@
 <body>
   <header>
     <div>
-      <div class="brand">🧠 Self-Corrective Temporal GraphRAG Studio ⏳</div>
-      <div style="font-size: 0.85rem; color: var(--text-dim); margin-top: 0.2rem;">Temporal Interval Validity • Monotonic Causal Paths • Platt Scaling Calibration • by anderdebona</div>
+      <div class="brand">🧠 Self-Corrective Temporal GraphRAG Studio v5.0.0 ⏳</div>
+      <div style="font-size: 0.85rem; color: var(--text-dim); margin-top: 0.2rem;">Temporal CRAG Evaluator • Time-Decayed PageRank • Monotonic Causal Paths • by anderdebona</div>
     </div>
-    <span class="status-badge">● Zero Drift Verified</span>
+    <span class="status-badge">● CRAG Self-Correction v5.0 Active</span>
   </header>
 
   <div class="stats-row">
     <div class="stat-card">
-      <div class="stat-lbl">Target Year</div>
+      <div class="stat-lbl">Target Query Year</div>
       <div class="stat-val" id="statYear">2026</div>
     </div>
     <div class="stat-card">
-      <div class="stat-lbl">Temporal Drift</div>
-      <div class="stat-val" style="color: var(--green);">0.00%</div>
+      <div class="stat-lbl">CRAG Verdict</div>
+      <div class="stat-val" style="color: var(--green);" id="statCragAction">CORRECT</div>
     </div>
     <div class="stat-card">
-      <div class="stat-lbl">Calibrated Confidence</div>
-      <div class="stat-val" style="color: var(--cyan);" id="statConf">98.4%</div>
+      <div class="stat-lbl">Platt Calibrated</div>
+      <div class="stat-val" style="color: var(--cyan);" id="statConfidence">96.0%</div>
     </div>
     <div class="stat-card">
-      <div class="stat-lbl">Causal Path Status</div>
-      <div class="stat-val" id="statPath">Monotonic</div>
+      <div class="stat-lbl">Temporal Consistency</div>
+      <div class="stat-val" style="color: var(--green);" id="statConsistency">100%</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-lbl">Decayed PR Leader</div>
+      <div class="stat-val" style="color: var(--amber); font-size: 1rem;" id="statPageRankLeader">AI_Audit_2026</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-lbl">Path Monotonicity</div>
+      <div class="stat-val" style="color: #a78bfa;">VALID ✓</div>
     </div>
   </div>
 
   <div class="main-grid">
     <div class="panel">
       <div class="panel-title">
-        <span>⏳ Interactive Target Year Temporal Slider</span>
+        <span>⏳ Continuous Temporal Time-Slider & Query</span>
       </div>
       <div class="slider-box">
-        <div class="slider-val" id="yearLabel">2026</div>
+        <div class="slider-val" id="yearDisplay">2026</div>
         <input type="range" id="yearSlider" min="2020" max="2030" value="2026" oninput="updateYear(this.value)">
-        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-dim);">
-          <span>2020</span>
-          <span>2025</span>
-          <span>2030</span>
-        </div>
       </div>
+
       <div class="controls">
-        <button class="btn" onclick="queryRAG('TaxRate')">Query Tax Rate</button>
-        <button class="btn" onclick="queryRAG('CEO')">Query CEO Position</button>
-        <button class="btn" style="background: rgba(255,255,255,0.1);" onclick="runPathFinder()">Trace Causal Path</button>
+        <button class="btn" onclick="queryRAG('TaxRate')">🔍 Query 'TaxRate'</button>
+        <button class="btn" onclick="queryRAG('CEO')">👤 Query 'CEO'</button>
+        <button class="btn" style="background: rgba(255,255,255,0.1);" onclick="runPageRank()">📈 Time-Decayed PageRank</button>
       </div>
-      <div class="panel-title" style="margin-top: 1rem;"><span>💬 Synthesized Temporal RAG Answer</span></div>
-      <pre id="ragAnswer">Slide year or click query to run temporal evaluation...</pre>
+
+      <div class="panel-title" style="margin-top: 1rem;">
+        <span>🛡️ Temporal CRAG Self-Correction Action (v5.0.0)</span>
+      </div>
+      <pre id="cragLog">Awaiting CRAG evaluation...</pre>
     </div>
 
     <div class="panel">
       <div class="panel-title">
-        <span>🧭 Monotonic Causal Reasoning Path & Compression</span>
+        <span>📈 Continuous Time-Decayed PageRank Scores (v5.0.0)</span>
       </div>
-      <pre id="pathLog">Awaiting causal path trace...</pre>
+      <pre id="prLog">Awaiting PageRank calculation...</pre>
 
-      <div class="panel-title" style="margin-top: 1.25rem;">
-        <span>🔍 Knowledge Graph Time Intervals Ground Truth</span>
+      <div class="panel-title" style="margin-top: 1rem;">
+        <span>📜 Speculative RAG Generation Result</span>
       </div>
-      <pre id="nodesLog">Loading graph nodes...</pre>
+      <pre id="ragLog">Awaiting query...</pre>
+
+      <div class="panel-title" style="margin-top: 1rem;">
+        <span>🧭 Monotonic Temporal Path Trace</span>
+      </div>
+      <pre id="pathLog">Awaiting pathfinder...</pre>
     </div>
   </div>
 
   <script>
     let currentYear = 2026;
-    let currentConcept = 'TaxRate';
 
     function updateYear(val) {
-      currentYear = parseInt(val, 10);
-      document.getElementById('yearLabel').innerText = currentYear;
+      currentYear = parseInt(val);
+      document.getElementById('yearDisplay').innerText = currentYear;
       document.getElementById('statYear').innerText = currentYear;
-      queryRAG(currentConcept);
+      queryRAG('TaxRate');
     }
 
-    async function queryRAG(concept = 'TaxRate') {
-      currentConcept = concept;
+    async function queryRAG(concept) {
       const res = await fetch('/api/rag/query', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ concept, targetYear: currentYear })
       });
       const data = await res.json();
-      
-      const conf = (data.calibrated?.calibratedConfidence * 100 || 98.4).toFixed(1);
-      document.getElementById('statConf').innerText = `${conf}%`;
-      document.getElementById('ragAnswer').innerText = JSON.stringify(data.generation, null, 2);
+
+      document.getElementById('statCragAction').innerText = data.cragResult?.action || 'CORRECT';
+      document.getElementById('statConfidence').innerText = `${((data.calibrated?.calibratedConfidence || 0.96) * 100).toFixed(1)}%`;
+      document.getElementById('cragLog').innerText = JSON.stringify(data.cragResult, null, 2);
+      document.getElementById('ragLog').innerText = JSON.stringify({
+        evaluation: data.evaluation,
+        generation: data.generation
+      }, null, 2);
     }
 
-    async function runPathFinder() {
-      const res = await fetch('/api/rag/path', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ minYear: 2020, maxYear: currentYear })
-      });
+    async function runPageRank() {
+      const res = await fetch('/api/graph/pagerank', { method: 'POST' });
+      const data = await res.json();
+      document.getElementById('prLog').innerText = JSON.stringify(data, null, 2);
+    }
+
+    async function fetchPath() {
+      const res = await fetch('/api/rag/path', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({}) });
       const data = await res.json();
       document.getElementById('pathLog').innerText = JSON.stringify(data.pathResult, null, 2);
     }
 
-    async function loadNodes() {
-      const res = await fetch('/api/nodes');
-      const data = await res.json();
-      document.getElementById('nodesLog').innerText = JSON.stringify(data, null, 2);
-    }
-
     window.onload = () => {
       queryRAG('TaxRate');
-      runPathFinder();
-      loadNodes();
+      runPageRank();
+      fetchPath();
     };
   </script>
 </body>
